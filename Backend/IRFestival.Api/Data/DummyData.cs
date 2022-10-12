@@ -18,6 +18,7 @@ namespace IRFestival.Api.Data
                          new Stage { Id = 2, FestivalId = 1, Name = "Orange Room", Description = description },
                          new Stage { Id = 3, FestivalId = 1, Name = "StarDust", Description = description },
                          new Stage { Id = 4, FestivalId = 1, Name = "Blue Room", Description = description },
+                         new Stage { Id = 5, FestivalId = 1, Name = "VIP Room", Description = description },
             };
 
             var artists = new List<Artist>() {
