@@ -35,9 +35,9 @@ namespace IRFestival.Api.Data
             lineUp.Items.Add(new ScheduleItem { Id = 2, Artist = artists[4], Stage = stages[3], Time = new DateTime(1972, 07, 01, 20, 30, 0) });
             lineUp.Items.Add(new ScheduleItem { Id = 3, Artist = artists[2], Stage = stages[0], Time = new DateTime(1972, 07, 01, 22, 0, 0) });
             lineUp.Items.Add(new ScheduleItem { Id = 4, Artist = artists[1], Stage = stages[1], Time = new DateTime(1972, 07, 01, 22, 15, 0) });
-            lineUp.Items.Add(new ScheduleItem { Id = 5, Artist = artists[0], Stage = stages[5], Time = new DateTime(1972, 07, 02, 20, 15, 0) });
+            lineUp.Items.Add(new ScheduleItem { Id = 5, Artist = artists[0], Stage = stages[4], Time = new DateTime(1972, 07, 02, 20, 15, 0) });
             lineUp.Items.Add(new ScheduleItem { Id = 6, Artist = artists[4], Stage = stages[3], Time = new DateTime(1972, 07, 02, 20, 45, 0) });
-            lineUp.Items.Add(new ScheduleItem { Id = 7, Artist = artists[3], Stage = stages[5], Time = new DateTime(1972, 07, 02, 22, 0, 0) });
+            lineUp.Items.Add(new ScheduleItem { Id = 7, Artist = artists[3], Stage = stages[4], Time = new DateTime(1972, 07, 02, 22, 0, 0) });
             lineUp.Items.Add(new ScheduleItem { Id = 8, Artist = artists[1], Stage = stages[1], Time = new DateTime(1972, 07, 02, 22, 30, 0) });
 
             Current = new Festival
