@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using IRFestival.Api.Data;
 using IRFestival.Api.Domain;
+using Microsoft.ApplicationInsights;
 using Microsoft.EntityFrameworkCore;
 
 namespace IRFestival.Api.Controllers
@@ -14,10 +15,12 @@ namespace IRFestival.Api.Controllers
     {
 
         private readonly FestivalDbContext _context;
+        private readonly TelemetryClient _telemetryClient;
 
-        public FestivalController(FestivalDbContext context)
+        public FestivalController(FestivalDbContext context, TelemetryClient telemetryClient)
         {
             _context = context;
+            _telemetryClient = telemetryClient;
         }
 
         [HttpGet("LineUp")]
@@ -36,8 +39,17 @@ namespace IRFestival.Api.Controllers
 
         [HttpGet("Artists")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IEnumerable<Artist>))]
-        public async Task<ActionResult> GetArtists()
+        public async Task<ActionResult> GetArtists([FromQuery]bool? withRatings)    
         {
+            if (withRatings.HasValue)
+            {
+                _telemetryClient.TrackEvent($"List of artists with ratings");
+            }
+            else
+            {
+                _telemetryClient.TrackEvent($"List of artists with ratings");
+            }
+
             var artists = await _context.Artists.ToListAsync();
             return Ok(artists);
         }
@@ -55,6 +67,7 @@ namespace IRFestival.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public ActionResult SetAsFavorite(int id)
         {
+
             var schedule = FestivalDataSource.Current.LineUp.Items
                 .FirstOrDefault(si => si.Id == id);
             if (schedule != null)

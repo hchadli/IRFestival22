@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { shareReplay, map, groupBy } from 'rxjs/operators';
 import { Artist } from 'src/app/api/models/artist.model';
 import { Schedule, ScheduleItem } from 'src/app/api/models/schedule.model';
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-home',
@@ -12,12 +15,25 @@ import { Schedule, ScheduleItem } from 'src/app/api/models/schedule.model';
 export class HomeComponent implements OnInit {
   artists$: Observable<Artist[]>;
 
+  AppInsights: ApplicationInsights
+
   private schedule$: Observable<ScheduleItem[]>;
   scheduleByDate$: Observable<{date: string, items: ScheduleItem[]}[]>;
 
-  constructor(private festivalApiService: FestivalApiService) { }
+  constructor(private festivalApiService: FestivalApiService) { 
+    this.AppInsights = new ApplicationInsights({
+      config: {
+        connectionString: environment.connectionstringAppInsights,
+        enableAutoRouteTracking: true  // option to log all route changes
+      }
+    });
+  }
 
   ngOnInit(): void {
+
+    this.AppInsights.loadAppInsights();
+    this.AppInsights.trackPageView();
+
     this.artists$ = this.festivalApiService
       .getArtists()
       .pipe(shareReplay());
