@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using IRFestival.Api.Data;
 using IRFestival.Api.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace IRFestival.Api.Controllers
 {
@@ -11,25 +12,42 @@ namespace IRFestival.Api.Controllers
     [ApiController]
     public class FestivalController : ControllerBase
     {
+
+        private readonly FestivalDbContext _context;
+
+        public FestivalController(FestivalDbContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet("LineUp")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Schedule))]
-        public ActionResult GetLineUp()
+        public async Task<ActionResult> GetLineUp()
         {
-            return Ok(FestivalDataSource.Current.LineUp);
+            List<Schedule> lineUp = await _context.Schedules.Include(x => x.Festival)
+                .Include(x => x.Items)
+                .ThenInclude(x => x.Artist)
+                .Include(x => x.Items)
+                .ThenInclude(x => x.Stage)
+                .ToListAsync();
+
+            return Ok(lineUp);
         }
 
         [HttpGet("Artists")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IEnumerable<Artist>))]
-        public ActionResult GetArtists()
+        public async Task<ActionResult> GetArtists()
         {
-            return Ok(FestivalDataSource.Current.Artists);
+            var artists = await _context.Artists.ToListAsync();
+            return Ok(artists);
         }
 
         [HttpGet("Stages")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IEnumerable<Stage>))]
-        public ActionResult GetStages()
+        public async Task<ActionResult> GetStages()
         {
-            return Ok(FestivalDataSource.Current.Stages);
+            var stages = await _context.Stages.ToListAsync();
+            return Ok(stages);
         }
 
         [HttpPost("Favorite")]
