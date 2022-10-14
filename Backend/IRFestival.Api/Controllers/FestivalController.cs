@@ -65,17 +65,13 @@ namespace IRFestival.Api.Controllers
         [HttpPost("Favorite")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ScheduleItem))]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public ActionResult SetAsFavorite(int id)
+        public async Task<ActionResult> SetAsFavorite(int id)
         {
+            var schedule = await _context.Schedules.Select(x => x.Items.FirstOrDefault(x => x.Id == id)).FirstAsync();
 
-            var schedule = FestivalDataSource.Current.LineUp.Items
-                .FirstOrDefault(si => si.Id == id);
-            if (schedule != null)
-            {
-                schedule.IsFavorite = !schedule.IsFavorite;
-                return Ok(schedule);
-            }
-            return NotFound();
+            if (schedule == null) return NotFound();
+            schedule.IsFavorite = !schedule.IsFavorite;
+            return Ok(schedule);
         }
 
     }

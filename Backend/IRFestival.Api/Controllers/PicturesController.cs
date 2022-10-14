@@ -37,7 +37,7 @@ namespace IRFestival.Api.Controllers
         public async Task<ActionResult> PostPicture(IFormFile file)
         {           
             BlobContainerClient container = BlobUtility.GetPicturesContainer();
-            var filename = $"{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}{HttpUtility.UrlPathEncode(file.FileName)}";
+            var filename = $"{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}{HttpUtility.UrlPathEncode(file.FileName.Replace(" ", ""))}";
             await container.UploadBlobAsync(filename, file.OpenReadStream());
             return Ok();
         }

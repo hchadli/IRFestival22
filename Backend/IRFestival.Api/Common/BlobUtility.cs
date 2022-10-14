@@ -30,11 +30,11 @@ namespace IRFestival.Api.Common
                 BlobContainerName = container.Name,
                 BlobName = blobName,
                 Resource = "b",
-                StartsOn = DateTimeOffset.UtcNow.AddMinutes(-1),
-                ExpiresOn = DateTimeOffset.UtcNow.AddMinutes(2),
+                StartsOn = DateTimeOffset.UtcNow.AddDays(-1),
+                ExpiresOn = DateTimeOffset.UtcNow.AddDays(2),
             };
 
-            sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
+            sasBuilder.SetPermissions(BlobContainerSasPermissions.All);
 
             string sasToken = sasBuilder.ToSasQueryParameters(Credential).ToString();
 

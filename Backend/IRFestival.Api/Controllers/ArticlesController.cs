@@ -32,7 +32,6 @@ namespace IRFestival.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Article))]
         public async Task<IActionResult> GetAsync()
         {
-            throw new ApplicationException("GetArticles failed");
             var database = await CosmosClient.CreateDatabaseIfNotExistsAsync("IRFestivalArticles");
             var containerResponse = await database.Database.CreateContainerIfNotExistsAsync("WebsiteArticles", "/tag");
             var container = containerResponse.Container;
