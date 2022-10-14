@@ -8,8 +8,8 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-[assembly: FunctionsStartup(typeof(RFestival.Function.Startup))]
-namespace RFestival.Function
+[assembly: FunctionsStartup(typeof(IRFestival.Function.Startup))]
+namespace IRFestival.Function
 {
     public class Startup : FunctionsStartup
     {
