@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using IRFestival.Api.Common;
@@ -11,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors();
 builder.Services.AddControllers();
+
+// Key vault
+
+builder.Configuration.AddAzureKeyVault(
+    new Uri($"https://irfestivalkeyvaultch.vault.azure.net/"),
+    new DefaultAzureCredential(new DefaultAzureCredentialOptions()));
+
 
 // Storage
 
