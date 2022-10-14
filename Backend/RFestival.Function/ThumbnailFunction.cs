@@ -26,7 +26,11 @@ namespace RFestival.Function
                 int height = i.GetCurrentSize().Height;
                 i.Crop(new Rectangle(0, 0, 340, height < 226 ? height : 226));
             });
+
+
             input.Save(thumbnail, format);
+
+
         }
     }
 }
