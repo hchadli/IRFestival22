@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - 'Backend/**'
+      - 'Backend/IRFestival.Api/**'
   workflow_dispatch:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ./Backend
+        working-directory: 'Backend/IRFestival.Api'
 
     steps:
       - uses: actions/checkout@v2
