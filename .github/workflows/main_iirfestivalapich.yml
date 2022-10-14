@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: 'Backend/IRFestival.Api'
+        working-directory: './Backend/IRFestival.Api'
 
     steps:
       - uses: actions/checkout@v2
