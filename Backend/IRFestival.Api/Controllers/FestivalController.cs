@@ -27,19 +27,23 @@ namespace IRFestival.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Schedule))]
         public async Task<ActionResult> GetLineUp()
         {
-            List<Schedule> lineUp = await _context.Schedules.Include(x => x.Festival)
-                .Include(x => x.Items)
-                .ThenInclude(x => x.Artist)
-                .Include(x => x.Items)
-                .ThenInclude(x => x.Stage)
-                .ToListAsync();
 
-            return Ok(lineUp);
+            return Ok(FestivalDataSource.Current.LineUp);
+
+            //List<Schedule> lineUp = await _context.Schedules
+            //    .Include(x => x.Festival)
+            //    .Include(x => x.Items)
+            //    .ThenInclude(x => x.Artist)
+            //    .Include(x => x.Items)
+            //    .ThenInclude(x => x.Stage)
+            //    .ToListAsync();
+
+            //return Ok(lineUp);
         }
 
         [HttpGet("Artists")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IEnumerable<Artist>))]
-        public async Task<ActionResult> GetArtists([FromQuery]bool? withRatings)    
+        public async Task<ActionResult> GetArtists([FromQuery] bool? withRatings)    
         {
             if (withRatings.HasValue)
             {
@@ -67,7 +71,7 @@ namespace IRFestival.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult> SetAsFavorite(int id)
         {
-            var schedule = await _context.Schedules.Select(x => x.Items.FirstOrDefault(x => x.Id == id)).FirstAsync();
+            var schedule = await _context.Schedules.Select(x => x.Items.FirstOrDefault(s => s.Id == id)).FirstAsync();
 
             if (schedule == null) return NotFound();
             schedule.IsFavorite = !schedule.IsFavorite;

@@ -18,6 +18,10 @@ builder.Services.AddControllers();
 builder.Configuration.AddAzureKeyVault(
     new Uri($"https://irfestivalkeyvaultch.vault.azure.net/"),
     new DefaultAzureCredential(new DefaultAzureCredentialOptions()));
+// App config
+
+builder.Configuration.AddAzureAppConfiguration(builder.Configuration.GetConnectionString("AppConfigurationConnection"));
+
 
 
 // Storage
