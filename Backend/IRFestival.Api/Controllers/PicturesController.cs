@@ -24,7 +24,7 @@ namespace IRFestival.Api.Controllers
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(string[]))]
         public async Task<ActionResult> GetAllPictureUrls()
         {
-            var container = BlobUtility.GetThumbsContainer();
+            var container = BlobUtility.GetPicturesContainer();
 
             var result = container.GetBlobs()
                 .Select(blob => BlobUtility.GetSasUri(container, blob.Name))
