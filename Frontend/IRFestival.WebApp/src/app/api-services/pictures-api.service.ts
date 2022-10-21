@@ -19,6 +19,6 @@ export class PicturesApiService {
     const data = new FormData();
     data.set('file', file);
 
-    return this.httpClient.post<never>(`${this.baseUrl}`, data);
+    return this.httpClient.post<never>(`${this.baseUrl}/upload`, data);
   }
 }

@@ -1,33 +1,64 @@
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-      <div class="container">
-        <a class="navbar-brand" asp-controller="Home" asp-action="Index">{{ festivalName }}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-          <ul class="navbar-nav flex-grow-1">
-            <li class="nav-item">
-              <a class="nav-link text-dark" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark" href="#">Lineup</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark" href="#">Tickets</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark" href="#">Practical Information</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark" href="pictures">Pictures</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark" href="upload">Upload your pics</a>
-            </li>
-          </ul>
-        </div>
+  <nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+  >
+    <div class="container">
+      <a class="navbar-brand" asp-controller="Home" asp-action="Index">{{
+        festivalName
+      }}</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target=".navbar-collapse"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+      >
+        <ul class="navbar-nav flex-grow-1">
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="#">Lineup</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="#">Tickets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="#">Practical Information</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="pictures">Pictures</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="upload">Upload your pics</a>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link text-dark"
+              *ngIf="!loginDisplay"
+              (click)="login()"
+            >
+              Login
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link text-dark"
+              *ngIf="loginDisplay"
+              (click)="logout()"
+            >
+              Logout
+            </button>
+          </li>
+        </ul>
       </div>
-    </nav>
-  </header>
+    </div>
+  </nav>
+</header>

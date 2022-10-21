@@ -10,6 +10,8 @@ using IRFestival.Api.Common;
 using IRFestival.Api.Options;
 using System.Text;
 using IRFestival.Api.Domain;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
 
 namespace IRFestival.Api.Controllers
 {
@@ -19,6 +21,8 @@ namespace IRFestival.Api.Controllers
     {
         private readonly IConfiguration _configuration;
         private BlobUtility BlobUtility { get; }
+
+        private static readonly string[] ScopesRequireByApiToUploadPictures = new string[] { "Pictures.Upload.All" };
         public PicturesController(BlobUtility blobUtility, IConfiguration configuration)
         {
             BlobUtility = blobUtility;
@@ -37,17 +41,17 @@ namespace IRFestival.Api.Controllers
 
             return Ok(result);
         }
-
-        [HttpPost]
+        
+        [Authorize]
+        [HttpPost("Upload")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(AppSettingsOptions))]
         public async Task<ActionResult> PostPicture([FromForm] Mailer mailer)          
         {
-
+            HttpContext.VerifyUserHasAnyAcceptedScope(ScopesRequireByApiToUploadPictures);
             // Post 
             BlobContainerClient container = BlobUtility.GetPicturesContainer();
             var filename = $"{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}{HttpUtility.UrlPathEncode(mailer.File.FileName.Replace(" ", ""))}";
             await container.UploadBlobAsync(filename, mailer.File.OpenReadStream());
-
 
             await using (var client =
                          new ServiceBusClient(_configuration.GetConnectionString("ServiceBusSenderConnection")))
